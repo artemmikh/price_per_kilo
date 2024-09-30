@@ -1,10 +1,10 @@
-from telegram.ext import CommandHandler
 from dotenv import load_dotenv
+from telegram.ext import CommandHandler, MessageHandler, Filters
 
 import const
+from check_environment_variables import check_tokens
+from handlers import wake_up, price_per_kilo
 from logger import logger
-from check import check_tokens
-from handlers import comands
 
 load_dotenv()
 
@@ -17,9 +17,8 @@ def main():
 
     try:
         logger.info('Регистрация обработчиков')
-        for comand in comands.keys():
-            const.UPDATER.dispatcher.add_handler(
-                CommandHandler(comand, comands[comand]))
+        const.UPDATER.dispatcher.add_handler(CommandHandler('start', wake_up))
+        const.UPDATER.dispatcher.add_handler(MessageHandler(Filters.text, price_per_kilo))
 
         logger.info('запуск процесса polling')
         const.UPDATER.start_polling()
@@ -28,7 +27,7 @@ def main():
     except Exception as error:
         message = f'Сбой в работе программы: {error}'
         logger.error(message)
-        # тут должна быть защита от спама ошибками
+        # TODO тут должна быть защита от спама ошибками
 
 
 if __name__ == '__main__':

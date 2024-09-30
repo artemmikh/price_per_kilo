@@ -1,14 +1,11 @@
 import const
+from exceptions import NoEnvironmentVariables
+
 from logger import logger
-from exceptions import (
-    NoEnvironmentVariables
-)
 
 
 def check_tokens():
-    environment_variables = [
-        const.TELEGRAM_TOKEN,
-        const.MY_TELEGRAM_CHAT_ID]
+    environment_variables = [const.TELEGRAM_TOKEN]
 
     for variable in environment_variables:
         if not variable:

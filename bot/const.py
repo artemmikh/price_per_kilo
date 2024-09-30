@@ -1,6 +1,7 @@
 import os
-from dotenv import load_dotenv
+
 import telegram
+from dotenv import load_dotenv
 from telegram.ext import Updater
 
 load_dotenv()
