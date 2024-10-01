@@ -30,4 +30,4 @@ jobs:
 
       - name: Copy files via SCP
         run: |
-          scp -o StrictHostKeyChecking=no -r ./ ${{ secrets.USER }}@${{ secrets.HOST }}:/path/to/destination
+          scp -o StrictHostKeyChecking=no -v -r ./ ***@***:/path/to/destination
