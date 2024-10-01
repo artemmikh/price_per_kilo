@@ -1,8 +1,9 @@
 name: Deploy to Server
+
 on:
   push:
     branches:
-      - main
+      - main  # или ваша основная ветка
 
 jobs:
   deploy:
@@ -10,24 +11,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Set up SSH
+      - name: Copy files to server
         env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
-          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PATH: ${{ secrets.SERVER_PATH }}
         run: |
           mkdir -p ~/.ssh
-          
-          echo "$SSH_KEY" > ~/.ssh/id_rsa
-          
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          
-          eval "$(ssh-agent -s)"
-          echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
-
-          ssh-keyscan -H ${{ secrets.HOST }} >> ~/.ssh/known_hosts
-
-      - name: Copy files via SCP
-        run: |
-          scp -o StrictHostKeyChecking=no -v -r ./ ***@***:/path/to/destination
+          ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+          rsync -avz --delete ./ $SERVER_USER@$SERVER_HOST:$SERVER_PATH
