@@ -1,6 +1,4 @@
-from bot.test import message
-from bot.utils import check_message, parse_message
-from utils import send_message
+from utils import check_message, parse_message, send_message
 
 INFO_MESSAGE = ('Пожалуйста, отправьте в чат две цифры через пробел, '
                 'напишите сначала вес в граммах, затем сумму. '
