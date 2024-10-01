@@ -20,7 +20,9 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           eval "$(ssh-agent -s)"
           echo "$SSH_PASSPHRASE" | ssh-add ~/.ssh/id_rsa
+          ssh-add -l  # Показать загруженные ключи для проверки
+          ssh -v ${{ secrets.USER }}@${{ secrets.HOST }} "echo 'SSH connection successful'"  # Пробное подключение
 
       - name: Copy files via SCP
         run: |
-          scp -o StrictHostKeyChecking=no -r ./ ${{ secrets.USER }}@${{ secrets.HOST }}:/root
+          scp -o StrictHostKeyChecking=no -r ./ ${{ secrets.USER }}@${{ secrets.HOST }}:/path/to/destination
