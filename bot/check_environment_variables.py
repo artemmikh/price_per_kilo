@@ -4,6 +4,7 @@ from logger import logger
 
 
 def check_tokens():
+    """Проверяет наличие обязательных переменных перед запуском бота."""
     environment_variables = [const.TELEGRAM_TOKEN]
 
     for variable in environment_variables:
