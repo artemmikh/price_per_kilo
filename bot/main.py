@@ -17,8 +17,10 @@ def main():
 
     try:
         logger.info('Регистрация обработчиков')
-        const.UPDATER.dispatcher.add_handler(CommandHandler('start', wake_up))
-        const.UPDATER.dispatcher.add_handler(MessageHandler(Filters.text, price_per_kilo))
+        const.UPDATER.dispatcher.add_handler(
+            CommandHandler('start', wake_up))
+        const.UPDATER.dispatcher.add_handler(
+            MessageHandler(Filters.text, price_per_kilo))
 
         logger.info('запуск процесса polling')
         const.UPDATER.start_polling()
@@ -27,7 +29,6 @@ def main():
     except Exception as error:
         message = f'Сбой в работе программы: {error}'
         logger.error(message)
-        # TODO тут должна быть защита от спама ошибками
 
 
 if __name__ == '__main__':
