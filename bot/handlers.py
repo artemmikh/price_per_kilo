@@ -1,4 +1,4 @@
-from const import INFO_MESSAGE
+from const import INFO_MESSAGE, GRAMS_PER_KILO
 from utils import check_message, parse_message, send_message
 
 
@@ -16,6 +16,6 @@ def price_per_kilo(update, context):
                      f'Проверьте сообщение. {INFO_MESSAGE}')
         return
     grams, price = parse_message(message)
-    send_message(update, context, message='Цена за килограмм –'
-                                          f' {int(price / (grams / 1000))}'
-                                          'рублей')
+    send_message(update, context, message=(
+        'Цена за килограмм или литр – '
+        f'{int(price / (grams / GRAMS_PER_KILO))} рублей'))
