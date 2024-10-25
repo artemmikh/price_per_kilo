@@ -13,7 +13,10 @@ def price_per_kilo(update, context):
     message = update.message.text
     if check_message(message) is None:
         send_message(update, context,
-                     f'Проверьте сообщение. {INFO_MESSAGE}')
+                     message=(
+                         'Проверьте сообщение. '
+                         'Каждое число должно быть не длиннее 15 символов. '
+                         f'{INFO_MESSAGE}'))
         return
     grams, price = parse_message(message)
     send_message(update, context, message=(
